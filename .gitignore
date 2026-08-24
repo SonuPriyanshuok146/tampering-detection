@@ -1,0 +1,39 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
+
+# Packaging
+*.egg-info/
+build/
+dist/
+
+# Environment variables
+.env
+
+# OS
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ML artifacts (large files — don't commit to Git)
+*.pth
+*.pt
+*.h5
+*.ckpt
+checkpoints/
+runs/
+
+# Datasets (CASIA v2 / Columbia Splicing — usually GBs, keep local only)
+data/
+datasets/
+
+# Uploaded images from the web interface demo
+uploads/
+static/uploads/
