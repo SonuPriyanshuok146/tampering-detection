@@ -46,21 +46,6 @@ Training happens in two stages: a baseline classifier on ELA-preprocessed images
 | Dev Tools | VS Code, Jupyter Notebook, Git |
 | Datasets | CASIA v2, Columbia Image Splicing Dataset, COVERAGE |
 
-## Project Structure
-
-```
-tampering_detection/
-├── venv/                          # virtual environment (not committed)
-├── src/
-│   └── tampering_detection/
-│       └── __init__.py
-├── tests/
-│   └── __init__.py
-├── requirements.txt
-├── setup.py
-├── README.md
-└── .gitignore
-```
 
 ## Setup
 
