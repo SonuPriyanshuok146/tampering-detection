@@ -18,10 +18,14 @@ class TamperingDataset(Dataset):
         au_dir = os.path.join(root_dir, "Au")
         tp_dir = os.path.join(root_dir, "Tp")
 
+        valid_ext = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
+
         for fname in os.listdir(au_dir):
-            self.samples.append((os.path.join(au_dir, fname), 0))
+            if fname.lower().endswith(valid_ext):
+                self.samples.append((os.path.join(au_dir, fname), 0))
         for fname in os.listdir(tp_dir):
-            self.samples.append((os.path.join(tp_dir, fname), 1))
+            if fname.lower().endswith(valid_ext):
+                self.samples.append((os.path.join(tp_dir, fname), 1))
 
         self.ela_quality = ela_quality
         self.transform = transforms.Compose([
