@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tampering Detector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top-row">
+    <div class="eyebrow">Image Forensics Tool</div>
+    <div class="status-chip checking" id="statusChip" role="button" tabindex="0" aria-expanded="false">
+      <span class="dot"></span>
+      <span id="statusText">Checking…</span>
+    </div>
+  </div>
+
+  <h1>Tampering Detector</h1>
+  <p class="sub">Upload an image to check whether it has been digitally altered. See exactly which region influenced the decision, and how confident the model was.</p>
+
+  <!-- Hidden by default. Opens when the status chip is clicked. -->
+  <div class="settings-panel" id="settingsPanel">
+    <label for="apiBase">Detection service address</label>
+    <div class="row">
+      <input id="apiBase" type="text" value="http://127.0.0.1:8000" spellcheck="false" aria-label="API base URL">
+      <button class="check-btn" id="checkBtn" type="button">Check</button>
+    </div>
+    <div class="hint-text">
+      This only needs to change if your detection service is running somewhere other than your own computer.
+    </div>
+  </div>
+
+  <!-- Upload dropzone -->
+  <div class="frame" id="dropzone" tabindex="0" role="button" aria-label="Upload an image to analyze">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <div class="prompt" id="prompt">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+      <div class="main">Drop an image, or click to select</div>
+      <div class="hint">JPG or PNG, up to 15MB</div>
+    </div>
+  </div>
+  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/jpg">
+
+  <!-- Scanning state -->
+  <div class="scan-frame" id="scanFrame">
+    <img id="scanImg" alt="">
+    <div class="scanline"></div>
+    <div class="analyzing-tag">Analyzing image…</div>
+  </div>
+
+  <div class="error-box" id="errorBox" role="alert"></div>
+
+  <!-- Results -->
+  <div class="results" id="results" aria-live="polite">
+
+    <div class="verdict-row">
+      <span class="badge" id="badge"></span>
+      <div class="confidence-num" id="confNum">— <span>confidence</span></div>
+    </div>
+    <div class="explain" id="explainBox"></div>
+
+    <div class="section-label">Original vs. Heatmap Evidence</div>
+    <div class="image-grid">
+      <div class="image-panel">
+        <div class="tag">Original image</div>
+        <img id="imgOriginal" alt="Uploaded original image">
+      </div>
+      <div class="image-panel">
+        <div class="tag">Grad-CAM heatmap</div>
+        <img id="imgOverlay" alt="Grad-CAM heatmap showing the regions the model focused on">
+      </div>
+    </div>
+
+    <div class="section-label">Analysis Charts</div>
+    <div class="chart-grid">
+      <div class="chart-panel" id="barPanel"><canvas id="barChart"></canvas></div>
+      <div class="chart-panel" id="gaugePanel"><canvas id="gaugeChart"></canvas></div>
+    </div>
+
+    <a class="reset-link" id="resetLink">Analyze another image →</a>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
