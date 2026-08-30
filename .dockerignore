@@ -1,0 +1,28 @@
+# Local environment -- never needed inside the container, huge and OS-specific
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Git metadata -- not needed at runtime
+.git/
+.gitignore
+
+# Dataset -- large, and the container only needs the trained model, not raw training data
+data/
+
+# Frontend -- served separately by Netlify, not by this backend container
+web/
+
+# Docs/notebooks/tests -- development artifacts, not needed to serve predictions
+docs/
+notebooks/
+results/
+tests/
+
+# Editor config
+.vscode/
+
+# Keep the folder itself but drop any leftover local upload files
+static/uploads/*
