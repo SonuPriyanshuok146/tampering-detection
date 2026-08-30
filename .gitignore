@@ -5,6 +5,9 @@ venv/
 __pycache__/
 *.pyc
 
+# Testing cache
+.pytest_cache/
+
 # Editor
 .vscode/
 
