@@ -17,12 +17,16 @@ from torchvision import transforms
 
 app = FastAPI(title="Tampering Detection API")
 
-# Allow the frontend (index.html, opened via file:// or a local dev server)
-# to call this API from a different origin. Fine for local development;
-# restrict allow_origins to your real domain before public deployment.
+# --- CORS, configured via an environment variable ---
+# Locally (no env var set) this defaults to "*" so nothing breaks during
+# development. On Render, set ALLOWED_ORIGIN to your real Netlify URL via
+# the dashboard -- no code change or redeploy needed if your frontend URL
+# ever changes, just update the env var and Render restarts automatically.
+ALLOWED_ORIGIN = os.environ.get("ALLOWED_ORIGIN", "*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[ALLOWED_ORIGIN] if ALLOWED_ORIGIN != "*" else ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

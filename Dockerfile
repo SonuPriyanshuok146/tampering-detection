@@ -13,16 +13,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python dependencies first (before copying code) so Docker can
 # cache this layer -- rebuilds are much faster if only your code changes.
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-docker.txt .
+RUN pip install --no-cache-dir -r requirements-docker.txt
+
+RUN pip install --no-cache-dir torch==2.3.1 torchvision==0.18.1 \
+    --index-url https://download.pytorch.org/whl/cpu
 
 # Now copy the rest of the project (respecting .dockerignore)
 COPY . .
 RUN pip install -e .
 
-# Hugging Face Spaces (Docker SDK) expects the container to listen on
-# port 7860 specifically -- this is not optional, it's how HF routes traffic.
-ENV PORT=7860
-EXPOSE 7860
+ENV PORT=8000
+EXPOSE 8000
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"]
